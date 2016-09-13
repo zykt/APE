@@ -19,6 +19,7 @@ class APE:
 
     @staticmethod
     def _get_page(url):
+        """helper function for getting pages"""
         try:
             page = requests.get(url)
             return {'status_code': page.status_code,
@@ -32,6 +33,8 @@ class APE:
                     }
 
     def _worker(self, results):
+        """thread worker, gets pages until there's no pages left in queue
+           and stores results in a list passed as an argument"""
         while not self._queue.empty():
             url = self._queue.get_nowait()
             logging.info('%s got %s', threading.current_thread().name, url)
